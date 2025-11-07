@@ -1,0 +1,24 @@
+:root {
+  font-family: 'Inter', 'SF Pro Display', 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  background-color: #f5f7fb;
+  color: #0b1526;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: linear-gradient(180deg, rgba(244, 249, 255, 0.9) 0%, #f5f7fb 35%, #eef1f8 100%);
+}
+
+a {
+  color: inherit;
+}
