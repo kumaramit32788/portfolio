@@ -1,24 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, type ReactElement } from 'react'
+import * as THREE from 'three'
 
 import './App.css'
-
-type Link = {
-  label: string
-  href: string
-}
-
-type Profile = {
-  name: string
-  tagline: string
-  location: string
-  headline: string
-  ctaLinks: {
-    resume: Link
-    contact: Link
-    phone?: Link
-    linkedin?: Link
-  }
-}
 
 type SkillGroup = {
   category: string
@@ -41,30 +24,23 @@ type ExperienceItem = {
   highlights: string[]
 }
 
-type HeroMetric = {
-  value: string
-  caption: string
-}
-
-type RevealStyle = CSSProperties & Record<'--reveal-index', string>
-
-const profile: Profile = {
+const profile = {
   name: 'Amit Kumar Thakur',
   tagline: 'React Native Developer',
   location: 'Bangalore, India',
   headline:
-    'React Native specialist with 3+ years building AI-enabled, cross-platform healthcare and enterprise apps. I integrate analytics, payments, and performance optimisations that keep mobile teams shipping fast and users engaged.',
-  ctaLinks: {
+    'React Native specialist with 3+ years building AI-enabled healthcare and enterprise apps with measurable product impact.',
+  links: {
     resume: {
-      label: 'View Résumé',
-      href: 'https://drive.google.com/file/d/amit-kumar-thakur-resume/view',
+      label: 'View Resume',
+      href: 'https://drive.google.com/file/d/1a9KT4apLREyP9enFKpReKGvGvG244I3B/view?usp=drive_link',
     },
     contact: {
       label: 'Email Amit',
       href: 'mailto:kumaramit32788@gmail.com',
     },
     phone: {
-      label: 'Call 96853 45004',
+      label: 'Call +91 96853 45004',
       href: 'tel:+919685345004',
     },
     linkedin: {
@@ -74,52 +50,41 @@ const profile: Profile = {
   },
 }
 
-const heroHighlights: string[] = ['AI-led product delivery', 'Production-grade reliability', 'Mobile-first execution']
+const mobileSpecialties = ['React Native', 'Android', 'iOS', 'App Performance', 'Push & Analytics']
 
-const heroMetrics: HeroMetric[] = [
-  { value: '3+ years', caption: 'React Native leadership' },
-  { value: '20% faster', caption: 'Latency reductions delivered' },
-  { value: '15% lift', caption: 'Clinical accuracy improvements' },
+const metrics = [
+  { value: '3+ years', label: 'React Native delivery' },
+  { value: '20%', label: 'Latency reduction achieved' },
+  { value: '15%', label: 'Diagnosis accuracy uplift' },
+  { value: '40%', label: 'Runtime error reduction' },
 ]
 
 const skills: SkillGroup[] = [
-  {
-    category: 'Frontend & Mobile',
-    items: ['React Native', 'React', 'TypeScript', 'JavaScript', 'Mobile UI/UX'],
-  },
-  {
-    category: 'State & Data',
-    items: ['Redux', 'Context API', 'Firebase', 'RESTful APIs', 'Socket.IO'],
-  },
-  {
-    category: 'Delivery & Quality',
-    items: ['Performance Optimization', 'Payment Gateways', 'CI/CD', 'Jest', 'Agile & Jira'],
-  },
+  { category: 'Frontend & Mobile', items: ['React Native', 'React', 'TypeScript', 'JavaScript', 'Mobile UI/UX'] },
+  { category: 'State & Data', items: ['Redux', 'Context API', 'Firebase', 'RESTful APIs', 'Socket.IO'] },
+  { category: 'Delivery & Quality', items: ['Performance Optimization', 'Payment Gateways', 'CI/CD', 'Jest', 'Agile'] },
 ]
 
 const projects: Project[] = [
   {
     title: 'Healthcare Analytics AI Integration',
-    description:
-      'Embedded AI modules inside a React Native care platform to surface diagnosis insights for clinicians.',
+    description: 'Integrated AI modules in a care platform to support clinicians with in-app diagnosis insights.',
     stack: ['React Native', 'TypeScript', 'Python APIs', 'RudderStack', 'CleverTap'],
-    result: 'Improved diagnosis accuracy by 15% and unlocked real-time analytics across mobile apps.',
+    result: 'Improved diagnosis accuracy by 15% and enabled real-time product analytics.',
     link: 'https://www.cloudphysician.ai/',
   },
   {
     title: 'Latency Optimisation Initiative',
-    description:
-      'Refactored API orchestration and caching strategies across Android and iOS builds.',
+    description: 'Refactored API orchestration and state flow to improve app responsiveness.',
     stack: ['React Native', 'Redux', 'Axios', 'REST APIs', 'TypeScript'],
-    result: 'Reduced app latency by 20% while maintaining cross-platform parity and stability.',
+    result: 'Reduced app latency by 20% across Android and iOS.',
     link: 'https://www.cloudphysician.ai/',
   },
   {
     title: 'HRMS Mobile Suite',
-    description:
-      'Full-stack attendance, WFH, and leave management solution with GPS validation and web parity.',
-    stack: ['React Native', 'Firebase', 'Socket.IO', 'Node.js', 'AsyncStorage'],
-    result: 'Delivered secure authentication, real-time updates, and spoof-resistant location logging.',
+    description: 'Built attendance, WFH, and leave workflows with location-aware verification.',
+    stack: ['React Native', 'Firebase', 'Socket.IO', 'Node.js'],
+    result: 'Delivered real-time updates and spoof-resistant attendance tracking.',
     link: 'https://www.elxer.com/',
   },
 ]
@@ -128,218 +93,322 @@ const experience: ExperienceItem[] = [
   {
     company: 'Cloudphysician Healthcare',
     role: 'React Native Developer',
-    period: 'Jun 2023 — Present',
-    summary:
-      'Shipping TypeScript-first healthcare mobile apps with AI insights, analytics, and CI/CD automation for bi-weekly releases.',
+    period: 'Jun 2023 - Present',
+    summary: 'Shipped TypeScript-first healthcare mobile apps with AI insights and faster release workflows.',
     highlights: [
-      'Integrated AI analytics to aid diagnosis, driving a 15% accuracy uplift for clinicians.',
-      'Optimised API handling and refactored code to cut latency by 20% across Android and iOS.',
-      'Unified RudderStack and CleverTap analytics pipelines to power personalised engagement campaigns (+25% retention).',
-      'Migrated the codebase to TypeScript, reducing pre-production runtime errors by 40%.',
-      'Piloted CI/CD flows via GitHub Actions and Fastlane for faster release cycles.',
+      'Integrated AI-assisted analytics for clinician workflows.',
+      'Reduced latency by 20% through API and rendering optimizations.',
+      'Aligned analytics pipelines for personalized engagement use cases.',
     ],
   },
   {
     company: 'Elxer Communications Pvt. Ltd.',
     role: 'Junior Software Engineer',
-    period: 'Jun 2022 — May 2023',
-    summary:
-      'Delivered end-to-end React Native features for HRMS and subscription products with secure, real-time experiences.',
+    period: 'Jun 2022 - May 2023',
+    summary: 'Delivered end-to-end React Native features for HRMS and subscription products.',
     highlights: [
-      'Implemented Firebase Auth + Firestore data flows with reusable navigation and storage patterns.',
-      'Built GPS-backed attendance verification to prevent spoofing and improve accuracy by 40%.',
-      'Delivered payment gateway modules supporting seamless subscription and billing journeys.',
-      'Transitioned real-time services from polling to Socket.IO for instantaneous updates.',
-      'Maintained modular codebases with continuous integration and custom component libraries.',
+      'Built secure Firebase auth and data flows.',
+      'Implemented GPS-backed attendance verification.',
+      'Integrated payment gateway journeys for subscriptions.',
     ],
   },
 ]
 
-const toolbelt: string[] = [
-  'React Navigation',
-  'AsyncStorage',
-  'Firebase Suite',
-  'RudderStack',
-  'CleverTap',
-  'Fastlane',
-  'GitHub Actions',
-  'Socket.IO',
-  'Stripe & Payment SDKs',
-]
-
-const revealIndexStyle = (index: number): RevealStyle => ({
-  '--reveal-index': String(index),
-})
-
-function App(): JSX.Element {
-  const heroLinks = [profile.ctaLinks.phone, profile.ctaLinks.linkedin].filter((link): link is Link => Boolean(link))
-  const sectionsRef = useRef<(HTMLElement | null)[]>([])
-  const [isHeroVisible, setIsHeroVisible] = useState(false)
+function App(): ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const animationFrame = requestAnimationFrame(() => setIsHeroVisible(true))
+    const mountNode = containerRef.current
+    if (!mountNode) return undefined
 
-    return () => cancelAnimationFrame(animationFrame)
-  }, [])
+    const scene = new THREE.Scene()
+    scene.background = new THREE.Color(0x050914)
+    scene.fog = new THREE.Fog(0x050914, 10, 26)
 
-  useEffect(() => {
-    const sections = sectionsRef.current
-    if (!sections.length) return
+    const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100)
+    camera.position.set(0, 0.4, 8.4)
 
-    const observer = new IntersectionObserver(
-      (entries, obs) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            obs.unobserve(entry.target)
-          }
-        })
-      },
-      {
-        root: null,
-        threshold: 0.3,
-      },
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance', alpha: true })
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    mountNode.appendChild(renderer.domElement)
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.82)
+    const keyLight = new THREE.DirectionalLight(0x8fbcff, 1.4)
+    keyLight.position.set(5, 6, 5)
+    const accentLight = new THREE.PointLight(0xff8a65, 13, 20)
+    accentLight.position.set(-4, -2, 4)
+    scene.add(ambientLight, keyLight, accentLight)
+
+    const starsGeometry = new THREE.BufferGeometry()
+    const starsCount = 700
+    const positions = new Float32Array(starsCount * 3)
+    for (let i = 0; i < starsCount; i += 1) {
+      const offset = i * 3
+      positions[offset] = (Math.random() - 0.5) * 52
+      positions[offset + 1] = (Math.random() - 0.5) * 34
+      positions[offset + 2] = (Math.random() - 0.5) * 52
+    }
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    const starsMaterial = new THREE.PointsMaterial({
+      color: 0xb8d4ff,
+      size: 0.07,
+      transparent: true,
+      opacity: 0.68,
+    })
+    const stars = new THREE.Points(starsGeometry, starsMaterial)
+    scene.add(stars)
+
+    const centerOrb = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.15, 2),
+      new THREE.MeshStandardMaterial({
+        color: 0x7ca9ff,
+        emissive: 0x1b3c83,
+        emissiveIntensity: 0.56,
+        metalness: 0.4,
+        roughness: 0.23,
+        flatShading: true,
+      }),
     )
+    centerOrb.position.y = 0.2
+    scene.add(centerOrb)
 
-    sections.forEach((section) => {
-      if (section) observer.observe(section)
+    const phoneGroup = new THREE.Group()
+    phoneGroup.position.set(0, 0.2, -1.2)
+
+    const phoneBody = new THREE.Mesh(
+      new THREE.BoxGeometry(1.95, 3.7, 0.16),
+      new THREE.MeshStandardMaterial({
+        color: 0x131e3e,
+        metalness: 0.72,
+        roughness: 0.22,
+      }),
+    )
+    phoneGroup.add(phoneBody)
+
+    const phoneScreen = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.65, 3.18),
+      new THREE.MeshStandardMaterial({
+        color: 0x4b72ff,
+        emissive: 0x15356f,
+        emissiveIntensity: 0.75,
+        metalness: 0.18,
+        roughness: 0.45,
+      }),
+    )
+    phoneScreen.position.z = 0.086
+    phoneGroup.add(phoneScreen)
+
+    const cameraNotch = new THREE.Mesh(
+      new THREE.BoxGeometry(0.5, 0.09, 0.03),
+      new THREE.MeshStandardMaterial({
+        color: 0x0a1127,
+        metalness: 0.2,
+        roughness: 0.7,
+      }),
+    )
+    cameraNotch.position.set(0, 1.48, 0.1)
+    phoneGroup.add(cameraNotch)
+
+    const widgetMaterial = new THREE.MeshStandardMaterial({
+      color: 0xaec6ff,
+      emissive: 0x2d4782,
+      emissiveIntensity: 0.5,
+      metalness: 0.12,
+      roughness: 0.58,
+      transparent: true,
+      opacity: 0.9,
+    })
+    const widgetGeometries = [
+      new THREE.PlaneGeometry(1.18, 0.38),
+      new THREE.PlaneGeometry(1.18, 0.58),
+      new THREE.PlaneGeometry(1.18, 0.48),
+    ]
+    const widgets = widgetGeometries.map((geometry, index) => {
+      const widget = new THREE.Mesh(geometry, widgetMaterial.clone())
+      widget.position.set(0, 0.85 - index * 0.85, 0.1)
+      phoneGroup.add(widget)
+      return widget
     })
 
-    return () => observer.disconnect()
+    scene.add(phoneGroup)
+
+    const appTilesGroup = new THREE.Group()
+    const tileOffsets = [
+      [-3.1, 1.2, -2.4],
+      [3.2, 0.5, -1.9],
+      [-2.8, -1.2, -1.6],
+      [2.9, -1.5, -2.2],
+    ] as const
+    const appTiles = tileOffsets.map((offset, index) => {
+      const tile = new THREE.Mesh(
+        new THREE.BoxGeometry(0.92, 0.92, 0.12),
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color().setHSL(0.56 + index * 0.06, 0.72, 0.62),
+          emissive: new THREE.Color().setHSL(0.58 + index * 0.05, 0.52, 0.2),
+          emissiveIntensity: 0.4,
+          metalness: 0.2,
+          roughness: 0.5,
+        }),
+      )
+      tile.position.set(offset[0], offset[1], offset[2])
+      appTilesGroup.add(tile)
+      return tile
+    })
+    scene.add(appTilesGroup)
+
+    const signalRingGroup = new THREE.Group()
+    const signalRings = [1.7, 2.15, 2.6].map((radius, index) => {
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(radius, 0.014, 12, 80),
+        new THREE.MeshBasicMaterial({
+          color: index % 2 === 0 ? 0x6f95ff : 0xff9c77,
+          transparent: true,
+          opacity: 0.36 - index * 0.08,
+        }),
+      )
+      ring.rotation.x = Math.PI * 0.5
+      signalRingGroup.add(ring)
+      return ring
+    })
+    signalRingGroup.position.set(0, 0.2, -1.15)
+    scene.add(signalRingGroup)
+
+    const outerRing = new THREE.Mesh(
+      new THREE.TorusGeometry(2.2, 0.08, 18, 120),
+      new THREE.MeshStandardMaterial({
+        color: 0xff9872,
+        emissive: 0x602717,
+        emissiveIntensity: 0.32,
+        metalness: 0.5,
+        roughness: 0.35,
+      }),
+    )
+    outerRing.rotation.x = Math.PI * 0.4
+    scene.add(outerRing)
+
+    const resize = () => {
+      const { clientWidth, clientHeight } = mountNode
+      camera.aspect = clientWidth / clientHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(clientWidth, clientHeight, false)
+    }
+
+    let rafId = 0
+    const clock = new THREE.Clock()
+    const animate = () => {
+      const time = clock.getElapsedTime()
+      centerOrb.rotation.y = time * 0.38
+      centerOrb.rotation.x = time * 0.18
+      centerOrb.position.y = 0.2 + Math.sin(time * 0.9) * 0.06
+
+      phoneGroup.rotation.y = Math.sin(time * 0.45) * 0.28
+      phoneGroup.rotation.x = Math.sin(time * 0.3) * 0.05
+      phoneGroup.position.y = 0.2 + Math.sin(time * 1.2) * 0.15
+
+      widgets.forEach((widget, index) => {
+        widget.position.x = Math.sin(time * (1 + index * 0.15)) * 0.05
+        widget.material.opacity = 0.65 + Math.sin(time * 1.4 + index) * 0.2
+      })
+
+      appTiles.forEach((tile, index) => {
+        tile.rotation.z += 0.004 + index * 0.0008
+        tile.position.y += Math.sin(time * 1.2 + index * 0.7) * 0.0026
+      })
+
+      signalRings.forEach((ring, index) => {
+        ring.scale.setScalar(1 + Math.sin(time * 1.45 - index * 0.6) * 0.04)
+      })
+
+      outerRing.rotation.z = time * 0.26
+      outerRing.position.y = Math.sin(time * 1.1) * 0.08
+      stars.rotation.y = time * 0.01
+      stars.rotation.x = time * 0.005
+      renderer.render(scene, camera)
+      rafId = window.requestAnimationFrame(animate)
+    }
+
+    resize()
+    animate()
+    window.addEventListener('resize', resize)
+
+    return () => {
+      window.removeEventListener('resize', resize)
+      window.cancelAnimationFrame(rafId)
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Points) {
+          object.geometry.dispose()
+          if (Array.isArray(object.material)) {
+            object.material.forEach((material) => material.dispose())
+          } else {
+            object.material.dispose()
+          }
+        }
+      })
+      starsGeometry.dispose()
+      starsMaterial.dispose()
+      renderer.dispose()
+      mountNode.innerHTML = ''
+    }
   }, [])
 
-  const setSectionRef = (index: number) => (element: HTMLElement | null) => {
-    sectionsRef.current[index] = element
-  }
-
   return (
-    <div className="app">
-      <header className={`hero ${isHeroVisible ? 'is-visible' : ''}`} id="top">
-        <div className="hero__content">
-          <p className="hero__eyebrow">{profile.location}</p>
-          <h1>{profile.name}</h1>
-          <h2>{profile.tagline}</h2>
+    <div className="portfolio-app">
+      <div className="portfolio-app__bg" ref={containerRef} aria-hidden="true" />
+
+      <header className="topbar">
+        <div className="topbar__brand">{profile.name}</div>
+        <nav className="topbar__nav">
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main className="content">
+        <section className="hero card">
+          <p className="hero__location">{profile.location}</p>
+          <h1>{profile.tagline}</h1>
           <p className="hero__headline">{profile.headline}</p>
-          <div className="hero__badges" aria-hidden="true">
-            {heroHighlights.map((badge) => (
-              <span className="hero__badge" key={badge}>
-                {badge}
-              </span>
+          <div className="hero__chipset" aria-hidden="true">
+            {mobileSpecialties.map((item) => (
+              <span key={item}>{item}</span>
             ))}
           </div>
           <div className="hero__actions">
-            <a className="button button--primary" href={profile.ctaLinks.contact.href}>
-              {profile.ctaLinks.contact.label}
+            <a className="button button--primary" href={profile.links.contact.href}>
+              {profile.links.contact.label}
             </a>
-            <a className="button" href={profile.ctaLinks.resume.href} target="_blank" rel="noreferrer">
-              {profile.ctaLinks.resume.label}
+            <a className="button" href={profile.links.resume.href} target="_blank" rel="noreferrer">
+              {profile.links.resume.label}
             </a>
           </div>
-          {heroLinks.length > 0 && (
-            <div className="hero__links">
-              {heroLinks.map((link, index) => (
-                <span className="hero__link" key={link.label}>
-                  <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
-                    {link.label}
-                  </a>
-                  {index < heroLinks.length - 1 && <span aria-hidden="true">•</span>}
-                </span>
-              ))}
-            </div>
-          )}
-          <ul className="hero__metrics">
-            {heroMetrics.map((metric, index) => (
-              <li key={metric.caption} style={revealIndexStyle(index)}>
-                <span>{metric.value}</span>
-                <small>{metric.caption}</small>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="hero__media" aria-hidden="true">
-          <div className="hero__orb hero__orb--one" />
-          <div className="hero__orb hero__orb--two" />
-          <div className="hero__portrait">
-            <img
-              src="/images/amit-portrait.png"
-              alt="Amit Kumar Thakur smiling in a cafe"
-            />
-          </div>
-        </div>
-      </header>
-
-      <main>
-        <section id="skills" className="section reveal" ref={setSectionRef(0)}>
-          <div className="section__header">
-            <p className="section__eyebrow">Expertise</p>
-            <h3>React Native-first, shipping pixel-perfect mobile journeys</h3>
-          </div>
-          <div className="skills reveal-grid">
-            {skills.map((group, index) => (
-              <div className="card" key={group.category} style={revealIndexStyle(index)}>
-                <h4>{group.category}</h4>
-                <ul>
-                  {group.items.map((item, itemIndex) => (
-                    <li key={item} style={revealIndexStyle(itemIndex)}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="hero__links">
+            <a href={profile.links.phone.href}>{profile.links.phone.label}</a>
+            <a href={profile.links.linkedin.href} target="_blank" rel="noreferrer">
+              {profile.links.linkedin.label}
+            </a>
           </div>
         </section>
 
-        <section id="projects" className="section reveal" ref={setSectionRef(1)}>
-          <div className="section__header">
-            <p className="section__eyebrow">Selected Work</p>
-            <h3>Apps users keep on their home screen</h3>
-          </div>
-          <div className="projects reveal-grid">
-            {projects.map((project, index) => (
-              <article className="card" key={project.title} style={revealIndexStyle(index)}>
-                <div className="card__body">
-                  <div className="card__header">
-                      <h4>{project.title}</h4>
-                    <a href={project.link} target="_blank" rel="noreferrer" className="card__link">
-                      View case study →
-                    </a>
-                  </div>
-                  <p>{project.description}</p>
-                  <ul className="card__tags">
-                    {project.stack.map((tech, techIndex) => (
-                      <li key={tech} style={revealIndexStyle(techIndex)}>
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="card__result">{project.result}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+        <section className="metrics-grid">
+          {metrics.map((metric) => (
+            <article className="metric card" key={metric.label}>
+              <span>{metric.value}</span>
+              <p>{metric.label}</p>
+            </article>
+          ))}
         </section>
 
-        <section id="experience" className="section reveal" ref={setSectionRef(2)}>
-          <div className="section__header">
-            <p className="section__eyebrow">Experience</p>
-            <h3>Shipped with product teams from seed to Series B</h3>
-          </div>
-          <div className="experience reveal-stack">
-            {experience.map((item, index) => (
-              <article className="experience__item" key={item.company} style={revealIndexStyle(index)}>
-                <div className="experience__meta">
-                  <p className="experience__period">{item.period}</p>
-                  <h4>
-                    {item.role} · {item.company}
-                  </h4>
-                  <p>{item.summary}</p>
-                </div>
+        <section id="skills" className="card">
+          <h2>Skills</h2>
+          <div className="skills-grid">
+            {skills.map((group) => (
+              <article className="sub-card" key={group.category}>
+                <h3>{group.category}</h3>
                 <ul>
-                  {item.highlights.map((highlight, highlightIndex) => (
-                    <li key={highlight} style={revealIndexStyle(highlightIndex)}>
-                      {highlight}
-                    </li>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
                   ))}
                 </ul>
               </article>
@@ -347,45 +416,61 @@ function App(): JSX.Element {
           </div>
         </section>
 
-        <section id="toolbelt" className="section reveal" ref={setSectionRef(3)}>
-          <div className="section__header">
-            <p className="section__eyebrow">Toolbelt</p>
-            <h3>Reliable mobile delivery from design handoff to app store launch</h3>
-          </div>
-          <div className="toolbelt reveal-grid">
-            {toolbelt.map((tool, index) => (
-              <span className="pill" key={tool} style={revealIndexStyle(index)}>
-                {tool}
-              </span>
+        <section id="projects" className="card">
+          <h2>Projects</h2>
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <article className="sub-card" key={project.title}>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <p className="result">{project.result}</p>
+                <div className="tags">
+                  {project.stack.map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
+                </div>
+                <a href={project.link} target="_blank" rel="noreferrer">
+                  View project
+                </a>
+              </article>
             ))}
           </div>
         </section>
 
-        <section id="contact" className="section section--highlight reveal" ref={setSectionRef(4)}>
-          <div className="cta">
-            <h3>Ready to build your next mobile milestone?</h3>
-            <p>
-              I partner with founders and product teams to ship high-performing React Native apps—whether you need a feature sprint, a
-              production rescue, or ongoing delivery.
-            </p>
-            <div className="cta__actions">
-              <a className="button button--primary" href={profile.ctaLinks.contact.href}>
-                {profile.ctaLinks.contact.label}
-              </a>
-              <a className="button" href={profile.ctaLinks.resume.href} target="_blank" rel="noreferrer">
-                {profile.ctaLinks.resume.label}
-              </a>
-            </div>
+        <section id="experience" className="card">
+          <h2>Experience</h2>
+          <div className="experience-list">
+            {experience.map((item) => (
+              <article className="sub-card" key={item.company}>
+                <h3>
+                  {item.role} - {item.company}
+                </h3>
+                <p className="period">{item.period}</p>
+                <p>{item.summary}</p>
+                <ul>
+                  {item.highlights.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="card card--center">
+          <h2>Let&apos;s build your next mobile milestone</h2>
+          <p>Available for feature sprints, optimization projects, and long-term React Native delivery.</p>
+          <div className="hero__actions">
+            <a className="button button--primary" href={profile.links.contact.href}>
+              Email Amit
+            </a>
+            <a className="button" href={profile.links.resume.href} target="_blank" rel="noreferrer">
+              Open Resume
+            </a>
           </div>
         </section>
       </main>
 
-      <footer className="footer">
-        <p>
-          © {new Date().getFullYear()} {profile.name}. Built with React &amp; Vite. Deployed on Vercel.
-        </p>
-        <a href="#top">Back to top ↑</a>
-      </footer>
     </div>
   )
 }
