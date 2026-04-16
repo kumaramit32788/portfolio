@@ -48,7 +48,7 @@
 .content {
   position: relative;
   z-index: 10;
-  width: min(980px, calc(100% - 2rem));
+  width: min(1280px, calc(100% - 2rem));
   margin: 1rem auto 3rem;
   display: grid;
   gap: 1rem;
@@ -183,11 +183,60 @@
   font-size: 0.85rem;
 }
 
-.skills-grid,
-.projects-grid {
+.skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0.8rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 1.6rem) / 3);
+  gap: 0.8rem;
+  overflow-x: auto;
+  overflow-y: visible;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.35rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.projects-grid > .sub-card {
+  scroll-snap-align: start;
+}
+
+.projects-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.projects-header h2 {
+  margin: 0;
+}
+
+.projects-controls {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.project-nav-button {
+  border: 1px solid rgba(173, 201, 255, 0.35);
+  background: rgba(28, 50, 102, 0.75);
+  color: #e8f1ff;
+  border-radius: 0.6rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.project-nav-button:hover {
+  background: rgba(44, 72, 140, 0.85);
+  border-color: rgba(185, 212, 255, 0.7);
 }
 
 .experience-list {
@@ -271,5 +320,15 @@
 
   .hero__chipset {
     gap: 0.35rem;
+  }
+
+  .projects-grid {
+    grid-auto-columns: 100%;
+  }
+}
+
+@media (max-width: 1080px) {
+  .projects-grid {
+    grid-auto-columns: calc((100% - 0.8rem) / 2);
   }
 }

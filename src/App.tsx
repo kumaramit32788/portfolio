@@ -67,6 +67,15 @@ const skills: SkillGroup[] = [
 
 const projects: Project[] = [
   {
+    title: 'Consumer trip booking — web & native',
+    description:
+      'Product engineering on a travel reservation stack: anonymous browsing that graduates into accounts, geo-aware planning, checkout with processor integrations, OAuth sign-on, push and in-app alerts, real-time support threads, and a traveler media layer (timeline posts plus vertical short video).',
+    stack: ['React Native', 'React', 'TypeScript', 'REST APIs', 'WebSockets', 'Maps SDKs'],
+    result:
+      'Tightened the path from discovery to confirmed trips while giving operators a reliable channel for updates and two-way conversation alongside richer, shareable trip storytelling.',
+    link: 'https://www.linkedin.com/in/amit-kumar-thakur-6563b5214',
+  },
+  {
     title: 'Healthcare Analytics AI Integration',
     description: 'Integrated AI modules in a care platform to support clinicians with in-app diagnosis insights.',
     stack: ['React Native', 'TypeScript', 'Python APIs', 'RudderStack', 'CleverTap'],
@@ -91,9 +100,22 @@ const projects: Project[] = [
 
 const experience: ExperienceItem[] = [
   {
+    company: 'Freelance',
+    role: 'Software Engineer',
+    period: 'Nov 2025 - Present',
+    summary:
+      'Software engineer for a trip-booking web and mobile platform: guest and signed-in flows, payments, maps, authentication, posts and shorts-style engagement, notifications, chat, and real-time messaging.',
+    highlights: [
+      'Designed and implemented guest and authenticated user journeys so browse, search, and booking work with clear upgrade paths after login.',
+      'Delivered payment gateway integrations and social sign-in alongside Google Maps–based location and routing experiences.',
+      'Built notification and in-app chat modules for booking updates, support, and operational messaging.',
+      'Added feed posts and shorts-style surfaces in the trip app for user-generated trip content, discovery, and booking-adjacent engagement.',
+    ],
+  },
+  {
     company: 'Cloudphysician Healthcare',
     role: 'React Native Developer',
-    period: 'Jun 2023 - Present',
+    period: 'Jun 2023 - 3 Nov 2025',
     summary: 'Shipped TypeScript-first healthcare mobile apps with AI insights and faster release workflows.',
     highlights: [
       'Integrated AI-assisted analytics for clinician workflows.',
@@ -116,6 +138,18 @@ const experience: ExperienceItem[] = [
 
 function App(): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const projectsRef = useRef<HTMLDivElement | null>(null)
+
+  const scrollProjects = (direction: 'left' | 'right'): void => {
+    const container = projectsRef.current
+    if (!container) return
+
+    const scrollStep = container.clientWidth / 3
+    container.scrollBy({
+      left: direction === 'left' ? -scrollStep : scrollStep,
+      behavior: 'smooth',
+    })
+  }
 
   useEffect(() => {
     const mountNode = containerRef.current
@@ -417,8 +451,28 @@ function App(): ReactElement {
         </section>
 
         <section id="projects" className="card">
-          <h2>Projects</h2>
-          <div className="projects-grid">
+          <div className="projects-header">
+            <h2>Projects</h2>
+            <div className="projects-controls" aria-label="Project navigation">
+              <button
+                className="project-nav-button"
+                type="button"
+                aria-label="Scroll projects left"
+                onClick={() => scrollProjects('left')}
+              >
+                ←
+              </button>
+              <button
+                className="project-nav-button"
+                type="button"
+                aria-label="Scroll projects right"
+                onClick={() => scrollProjects('right')}
+              >
+                →
+              </button>
+            </div>
+          </div>
+          <div className="projects-grid" ref={projectsRef}>
             {projects.map((project) => (
               <article className="sub-card" key={project.title}>
                 <h3>{project.title}</h3>
